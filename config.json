@@ -1,0 +1,17 @@
+{
+  "common": {
+    "adminName": "Admin",
+    "exportedColumns": {
+      "group": ["name", "role"]
+    }
+  },
+  "cuks": {
+    "model": {
+      "connector": {
+        "default": {
+          "dab": "@rappopo/dab-memory"
+        }
+      }
+    }
+  }
+}

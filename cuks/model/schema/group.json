@@ -1,0 +1,30 @@
+{
+  "attributes": {
+    "domain": {
+      "type": "string",
+      "validator": {
+        "required": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "validator": {
+        "required": true
+      }
+    },
+    "role": {
+      "type": "array"
+    },
+    "active": "boolean"
+  },
+  "indexes": {
+    "uniq": {
+      "column": ["domain", "name"],
+      "unique": true
+    }
+  },
+  "behavior": {
+    "createdAt": true,
+    "updatedAt": true
+  }
+}

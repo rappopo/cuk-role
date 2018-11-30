@@ -13,6 +13,12 @@ module.exports = function (cuk) {
         })
       }
       const cfg = _.get(cuk.pkg.role, 'cfg.common', {})
+      if (!ctx.auth.user.group_id) {
+        throw helper('core:makeError')({
+          msg: 'Group disabled/inactive',
+          status: 403
+        })
+      }
       const group = await helper('model:findOne')('role:group', ctx.auth.user.group_id)
       if (!group.data.active) {
         throw helper('core:makeError')({

@@ -1,6 +1,6 @@
 {
   "name": "@rappopo/cuk-role",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "description": "Rappopo CUK User Role & Permission Support",
   "main": "index.js",
   "scripts": {

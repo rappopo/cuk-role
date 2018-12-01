@@ -1,5 +1,17 @@
 ## Changelog
 
+### 0.0.8
+
+- Bug fix: auto create role still use domain
+
+### 0.0.7
+
+- Bug fix: model definition still mentioned to domain column
+
+### 0.0.6
+
+- Change site domain to site code
+
 ### 0.0.5
 
 - Throw error if a user doesn't belongs to any group

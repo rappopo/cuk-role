@@ -1,5 +1,10 @@
 ## Changelog
 
+### 0.0.9
+
+- Bug fix: should only recreate roles when REBUILD
+- Bug fix: permission should ALWAYS recreated
+
 ### 0.0.8
 
 - Bug fix: auto create role still use domain

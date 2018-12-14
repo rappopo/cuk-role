@@ -12,7 +12,7 @@ module.exports = function (cuk) {
           msg: 'User authentication required'
         })
       }
-      const cfg = _.get(cuk.pkg.role, 'cfg.common', {})
+      const cfg = _.get(cuk.pkg.role, 'cfg', {})
       if (!ctx.auth.user.group_id) {
         throw helper('core:makeError')({
           msg: 'Group disabled/inactive',

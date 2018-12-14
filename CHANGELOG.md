@@ -1,5 +1,9 @@
 ## Changelog
 
+### 0.0.10
+
+- Breaking change: config root no longer use common & cuks.
+
 ### 0.0.9
 
 - Bug fix: should only recreate roles when REBUILD

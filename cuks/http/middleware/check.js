@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = function (cuk) {
-  const { _, helper } = cuk.pkg.core.lib
+  const { _, helper, config } = cuk.pkg.core.lib
   const handleRest = require('./_handle_rest')(cuk)
 
   return () => {
@@ -12,7 +12,7 @@ module.exports = function (cuk) {
           msg: 'User authentication required'
         })
       }
-      const cfg = _.get(cuk.pkg.role, 'cfg', {})
+      const cfg = config('role')
       if (!ctx.auth.user.group_id) {
         throw helper('core:makeError')({
           msg: 'Group disabled/inactive',

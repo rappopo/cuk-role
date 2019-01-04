@@ -13,7 +13,8 @@
       }
     },
     "role": {
-      "type": "array"
+      "type": "array",
+      "subTypeOf": "string"
     },
     "active": "boolean"
   },

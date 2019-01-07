@@ -15,7 +15,7 @@ module.exports = function (cuk) {
       case 'replaceSelf':
       case 'modify':
       case 'modifySelf': action = 'update'; break
-      case 'remode': action = 'delete'; break
+      case 'remove': action = 'delete'; break
     }
     if (!action) throw helper('core:makeError')('Unknown role action')
     action += _.upperFirst(_.get(route, '_role.resourcePossession'))

@@ -36,7 +36,6 @@ module.exports = function (cuk) {
       const route = ctx.router.route(ctx._matchedRouteName)
       if (_.get(route, '_role.customHandling')) return next()
       const roles = _.uniq(_.concat(group.data.role || [], ctx.auth.user.role || []))
-      console.log(group.data, ctx.auth.user, roles)
       if (ctx.router.pkgId === 'rest' && handleRest(route, roles, ctx, next)) return next()
       throw helper('core:makeError')({
         msg: 'Access denied',

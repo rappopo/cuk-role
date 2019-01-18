@@ -21,13 +21,14 @@ module.exports = function (cuk) {
     action += _.upperFirst(_.get(route, '_role.resourcePossession'))
     let permission
     _.each(role, r => {
-      const p = helper('role:get').can(r)[action]('rest:' + resource)
-      if (p) {
+      const ac = helper('role:get')
+      const p = ac.can(r)[action]('rest:' + resource)
+      if (p && p.granted) {
         permission = p
         return undefined
       }
     })
-    if (permission && permission.granted) {
+    if (permission) {
       ctx.auth.permission = permission
       return permission
     }

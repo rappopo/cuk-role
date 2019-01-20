@@ -14,5 +14,9 @@ module.exports = function (cuk) {
       .readAny('route:group')
       .updateAny('route:group')
       .deleteAny('route:group')
+
+      .readAny('rest:grant')
+      .readAny('rest:permission')
+      .readAny('route:permission')
   }
 }

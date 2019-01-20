@@ -1,0 +1,12 @@
+{
+  "srcAttribIdType": "string",
+  "connector": "model:default",
+  "attributes": {
+    "name": {
+      "type": "string",
+      "validator": {
+        "required": true
+      }
+    }
+  }
+}

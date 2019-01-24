@@ -15,14 +15,14 @@ module.exports = function (cuk) {
       const cfg = helper('core:config')('role')
       if (!ctx.auth.user.group_id) {
         throw helper('core:makeError')({
-          msg: 'Group disabled/inactive',
+          msg: 'group_disabled_or_inactive',
           status: 403
         })
       }
       const group = await helper('model:findOne')('role:group', ctx.auth.user.group_id)
       if (!group.data.active) {
         throw helper('core:makeError')({
-          msg: 'Group disabled/inactive',
+          msg: 'group_disabled_or_inactive',
           status: 403
         })
       }
@@ -30,17 +30,26 @@ module.exports = function (cuk) {
       ctx.auth.group = _.pick(group.data, _.concat([helper('model:getIdColumn')('role:group')],
         cfg.exportedColumns.group || []))
 
-      if (!ctx._matchedRouteName) throw helper('core:makeError')('Unknown route')
+      if (!ctx._matchedRouteName) throw helper('core:makeError')('unknown_route')
       // if (ctx.auth.isAdmin) return next()
 
       const route = ctx.router.route(ctx._matchedRouteName)
-      if (_.get(route, '_role.customHandling')) return next()
-      const roles = _.uniq(_.concat(group.data.role || [], ctx.auth.user.role || []))
-      if (ctx.router.pkgId === 'rest' && handleRest(route, roles, ctx, next)) return next()
-      throw helper('core:makeError')({
-        msg: 'Access denied',
-        status: 403
-      })
+      const handler = _.get(route, '_options.role.handler')
+      if (handler) {
+        const passed = await Promise.resolve(handler(ctx))
+        if (passed) return next()
+        throw helper('core:makeError')({
+          msg: 'access_denied',
+          status: 403
+        })
+      } else {
+        const roles = _.uniq(_.concat(group.data.role || [], ctx.auth.user.role || []))
+        if (ctx.router.pkgId === 'rest' && handleRest(route, roles, ctx, next)) return next()
+        throw helper('core:makeError')({
+          msg: 'access_denied',
+          status: 403
+        })
+      }
     }
   }
 }

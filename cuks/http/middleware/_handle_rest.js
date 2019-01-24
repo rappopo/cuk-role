@@ -4,9 +4,9 @@ module.exports = function (cuk) {
   const { _, helper } = cuk.pkg.core.lib
 
   return (route, role = [], ctx, next) => {
-    const [method, resource] = _.drop(route.name.split(':'))
+    const names = _.drop(route.name.split(':'))
     let action
-    switch (method) {
+    switch (names[1]) {
       case 'find':
       case 'findOne':
       case 'findOneSelf': action = 'read'; break
@@ -17,12 +17,11 @@ module.exports = function (cuk) {
       case 'modifySelf': action = 'update'; break
       case 'remove': action = 'delete'; break
     }
-    if (!action) throw helper('core:makeError')('Unknown role action')
-    action += _.upperFirst(_.get(route, '_role.resourcePossession'))
+    if (!action) throw helper('core:makeError')('unknown_role_action')
+    action += _.upperFirst(_.get(route, '_options.role.resourcePossession'))
     let permission
     _.each(role, r => {
-      const ac = helper('role:get')
-      const p = ac.can(r)[action]('rest:' + resource)
+      const p = helper('role:get').can(r)[action](route.name)
       if (p && p.granted) {
         permission = p
         return undefined

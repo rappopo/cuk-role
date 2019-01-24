@@ -5,9 +5,10 @@ module.exports = function (cuk) {
 
   const getRoles = () => {
     let roles = helper('role:get').getRoles()
-    return _.map(roles, p => {
+    let result = _.map(roles, p => {
       return { _id: p, name: _.startCase(p) }
     })
+    return result
   }
 
   return {
@@ -16,14 +17,16 @@ module.exports = function (cuk) {
     method: {
       find: {
         handler: async ctx => {
-          const result = await helper('model:tempDataset')({ name: ctx.state.reqId }, getRoles(), ctx)
+          let result = await helper('model:tempDataset')({ name: ctx.state.reqId }, getRoles(), ctx)
+          result.data = helper('rest:convertIdColumn')(null, result.data)
           return result
         }
       },
       findOne: {
         handler: async ctx => {
-          const role = _.find(getRoles(), { _id: ctx.params.id })
+          let role = _.find(getRoles(), { _id: ctx.params.id })
           if (!role) throw helper('core:makeError')({ msg: 'record_not_found', status: 404 })
+          role = helper('rest:convertIdColumn')(null, role)
           return {
             success: true,
             data: role

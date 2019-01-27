@@ -13,12 +13,11 @@ module.exports = function (cuk) {
 
   return {
     middleware: 'auth:jwt, auth:basic, auth:bearer, auth:check, role:check',
-    options: { role: { resourcePossession: 'own' } },
+    options: { role: { resourcePossession: 'own' }, idColumn: '_id' },
     method: {
       find: {
         handler: async ctx => {
           let result = await helper('model:tempDataset')({ name: ctx.state.reqId }, getRoles(), ctx)
-          result.data = helper('rest:convertIdColumn')(null, result.data)
           return result
         }
       },
@@ -26,7 +25,6 @@ module.exports = function (cuk) {
         handler: async ctx => {
           let role = _.find(getRoles(), { _id: ctx.params.id })
           if (!role) throw helper('core:makeError')({ msg: 'record_not_found', status: 404 })
-          role = helper('rest:convertIdColumn')(null, role)
           return {
             success: true,
             data: role

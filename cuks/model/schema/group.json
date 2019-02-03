@@ -1,6 +1,6 @@
 {
   "attributes": {
-    "site": {
+    "site_id": {
       "type": "string",
       "validator": {
         "required": true
@@ -20,7 +20,7 @@
   },
   "indexes": {
     "uniq": {
-      "column": ["site", "name"],
+      "column": ["site_id", "name"],
       "unique": true
     }
   },

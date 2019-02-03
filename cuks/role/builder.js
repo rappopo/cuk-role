@@ -5,7 +5,7 @@ module.exports = function (cuk) {
 
   return (ac) => {
     const access = ac.grant('admin')
-    helper('role:addRestAccess')(access, 'role', 'group')
+    helper('role:addRestAccess')(access, 'role', 'group', ['*', '!site_id'])
       .readAny('rest:role:findOneSelf:grants')
       .readAny('rest:role:find:role')
       .readAny('rest:role:findOne:role')
